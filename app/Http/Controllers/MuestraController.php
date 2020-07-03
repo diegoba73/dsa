@@ -10,6 +10,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Requests\ValidarFormularioRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DbExport;
+use App\Exports\DsbExport;
+use App\Exports\DsoExport;
+use App\Exports\DlExport;
 use App\User;
 use App\Departamento;
 use App\Matriz;
@@ -77,6 +82,25 @@ class MuestraController extends Controller
                     ->ensayo($ensayo_biologico)
                     ->microbiologia($microbiologia)
                     ->paginate(20);
+
+            }  elseif ((Auth::user()->role_id == 12)&&(Auth::user()->departamento_id == 5)){
+
+                        $muestras = Muestra::with('remitente')
+                        ->where('muestras.tipo_prestacion', '=', 'ARANCELADO')
+                        ->orderBy('muestras.id', 'DESC')
+                        ->id($id)
+                        ->numero($numero)
+                        ->tipo($tipo_muestra)
+                        ->muestra($muestra)
+                        ->lugar($lugar)
+                        ->departamento($departamento)
+                        ->remite($remitente)
+                        ->pendiente($pendiente)
+                        ->cromatografia($cromatografia)
+                        ->quimica($quimica)
+                        ->ensayo($ensayo_biologico)
+                        ->microbiologia($microbiologia)
+                        ->paginate(20);
                 
         } elseif (Auth::user()->role_id == 3) {
                     $muestras = Muestra::with('remitente')
@@ -338,6 +362,21 @@ class MuestraController extends Controller
         return view('lab.muestras.imprimir_resultado')->with(compact('muestra', 'remitente', 'localidad', 'provincia', 'ensayos', 'analitos', 'matriz', 'tipomuestra')); // imprimir
     } 
 
+    public function imprimir_resultado_firma($id)
+    {
+        $muestra = Muestra::find($id);
+        $provincia = Provincia::pluck('provincia');
+        $localidad = Localidad::pluck('localidad');        
+        $remitente = Remitente::pluck('nombre');
+        $matriz = Matriz::pluck('matriz');
+        $tipomuestra = Tipomuestra::pluck('tipo_muestra');
+        $analitos = Analito::where('muestra_id', $id)->get();
+        $ensayos = Ensayo::orderBy('codigo')->get();
+        $muestra->fecha_salida = Carbon::now();
+        $muestra->save();
+        return view('lab.muestras.imprimir_resultado_firma')->with(compact('muestra', 'remitente', 'localidad', 'provincia', 'ensayos', 'analitos', 'matriz', 'tipomuestra')); // imprimir
+    } 
+
     public function getEnsayos($id){
         return Ensayo::where('matriz_id', $id)->get();
     }
@@ -583,6 +622,26 @@ class MuestraController extends Controller
         $notification = 'La muestra fué ACTUALIZADA correctamente.';
         return redirect()->route('lab_muestras_index')->with(compact('notification'));
 
+    }
+
+    public function exportDbExcel()
+    {
+        return Excel::download(new DbExport, 'consulta-muestras.xls');
+    }
+
+    public function exportDsbExcel()
+    {
+        return Excel::download(new DsbExport, 'consulta-muestras.xls');
+    }
+
+    public function exportDlExcel()
+    {
+        return Excel::download(new DlExport, 'consulta-muestras.xls');
+    }
+
+    public function exportDsoExcel()
+    {
+        return Excel::download(new DsoExport, 'consulta-muestras.xls');
     }
 }
 

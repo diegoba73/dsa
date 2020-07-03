@@ -84,6 +84,7 @@
                                 <th>Fecha</th>
                                 <th>Remitente</th>
                                 <th>Conclusión</th>
+                                <th>Firmado</th>
                                 <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -94,13 +95,41 @@
                                                     <td>{{ date('d-m-Y', strtotime($dsb_remito->fecha)) }}</td>
                                                     <td>{{ $dsb_remito->remitente->nombre}}</td>
                                                     <td>{{ $dsb_remito->conclusion}}</td>
+                                                    <td>
+                                                    @if ($dsb_remito->chequeado == 1)
+                                                        <a class="fas fa-check-circle fa-2x text-green"></a>
+                                                        @else
+                                                        <a class="fas fa-times-circle fa-2x text-red"></a>
+                                                    @endif
+                                                    </td>
                                                     <td class="td-actions text-left">
                                                         <a href="{{ url('/dsb/remitos/'.$dsb_remito->id.'/edit')}}" title="Editar" rel="tooltip" class="btn btn-primary btn-round">
                                                         <i class="fas fa-edit"></i>
                                                         </a>  
                                                         <a href="{{ url('/dsb/remitos/'.$dsb_remito->id.'/imprimir_remito')}}" target="_blank" title="Imprimir Remito" rel="tooltip" class="btn btn-primary btn-round">
                                                         <i class="fas fa-print"></i>
-                                                            </a>                               
+                                                        </a>   
+                                                        @if ($dsb_remito->chequeado === 1)
+                                                        <a href="{{ url('/dsb/remitos/'.$dsb_remito->id.'/imprimir_remito_firma')}}" target="_blank" title="Imprimir Remito con firma" rel="tooltip" class="btn btn-primary btn-round">
+                                                            <i class="fas fa-file-signature"></i>
+                                                        </a>       
+                                                        @else
+                                                        <a></a>                        
+                                                        @endif
+                                                        @if (Auth::user()->id == 3)
+                                                            @if (($dsb_remito->chequeado === null) || ($dsb_remito->chequeado === 0))
+                                                                <a class="btn btn-primary btn-round" href="{{ route('aceptar_remito_dsb', $dsb_remito->id) }}">
+                                                                    <i class="fas fa-check"></i>
+                                                                </a>
+                                                                <a class="btn btn-primary btn-round" href="{{ route('rechazar_remito_dsb', $dsb_remito->id) }}">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                            @elseif ($dsb_remito->chequeado === 1)
+                                                                <a class="btn btn-primary btn-round" href="{{ route('rechazar_remito_dsb', $dsb_remito->id) }}">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                            @endif
+                                                            @endif                          
                                                     </td>
                                 </tr>
                             @endforeach

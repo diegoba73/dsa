@@ -98,7 +98,7 @@ class Muestra extends Model
     public function scopeRemite($query, $remitente)
     {
         if($remitente)
-        return $query->where('remitente_id', 'LIKE', "%$remitente%");
+        return $query->where('remitente_id', 'LIKE', "$remitente");
     }
     public function scopeDepartamento($query, $departamento)
     {

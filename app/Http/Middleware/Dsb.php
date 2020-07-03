@@ -18,7 +18,7 @@ class Dsb
         if (!auth()->check()) {
             return redirect('/login');
         }
-        if (auth()->user()->role_id == 11) {
+        if ((auth()->user()->role_id == 11) || (auth()->user()->role_id == 1)) {
             return $next($request);
             
         }else {

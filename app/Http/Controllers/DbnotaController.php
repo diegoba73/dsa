@@ -68,7 +68,7 @@ class DbnotaController extends Controller
                 }
                 else {
                 $ultimo_registro = Dbnota::orderBy('id', 'desc')->first();
-                $ultimo_ano = Carbon::parse($ultimo_registro->fecha_entrada)->year;
+                $ultimo_ano = Carbon::parse($ultimo_registro->fecha)->year;
                 $ano_actual = Carbon::now()->year;
                 
                 if ( $ultimo_ano == $ano_actual)
@@ -147,7 +147,7 @@ class DbnotaController extends Controller
                     }
                     else {
                     $ultimo_registro = Dbnota::orderBy('id', 'desc')->first();
-                    $ultimo_ano = Carbon::parse($ultimo_registro->fecha_entrada)->year;
+                    $ultimo_ano = Carbon::parse($ultimo_registro->fecha)->year;
                     $ano_actual = Carbon::now()->year;
                     
                     if ( $ultimo_ano == $ano_actual)
@@ -172,7 +172,7 @@ class DbnotaController extends Controller
                     }
                     else {
                     $ultimo_registro = Dsbnota::orderBy('id', 'desc')->first();
-                    $ultimo_ano = Carbon::parse($ultimo_registro->fecha_entrada)->year;
+                    $ultimo_ano = Carbon::parse($ultimo_registro->fecha)->year;
                     $ano_actual = Carbon::now()->year;
                     
                     if ( $ultimo_ano == $ano_actual)
@@ -197,7 +197,7 @@ class DbnotaController extends Controller
                     }
                     else {
                     $ultimo_registro = Dsonota::orderBy('id', 'desc')->first();
-                    $ultimo_ano = Carbon::parse($ultimo_registro->fecha_entrada)->year;
+                    $ultimo_ano = Carbon::parse($ultimo_registro->fecha)->year;
                     $ano_actual = Carbon::now()->year;
                     
                     if ( $ultimo_ano == $ano_actual)

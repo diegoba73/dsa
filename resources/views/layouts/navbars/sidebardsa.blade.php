@@ -14,6 +14,11 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('lab_muestras_index') }}">
+                        <i class="fas fa-info-circle text-primary"></i> {{ __('Muestras') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('dsa_notas_index') }}">
                         <i class="fas fa-file-alt text-blue"></i> {{ __('Notas') }}
                     </a>

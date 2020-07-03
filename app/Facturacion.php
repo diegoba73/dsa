@@ -36,4 +36,10 @@ class Facturacion extends Model
         if($detalle)
         return $query->where('detalle', 'LIKE', "%$detalle%");
     }
+
+    public function scopeDepartamento($query, $departamento)
+    {
+        if($departamento)
+        return $query->where('departamento', 'LIKE', "%$departamento%");
+    }
 }

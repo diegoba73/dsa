@@ -29,6 +29,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('db_exp_index') }}">
+                        <i class="fas fa-folder-open text-blue"></i> {{ __('Expedientes') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('db_remitos_index') }}">
                         <i class="fas fa-file-invoice text-blue"></i> {{ __('Remitos') }}
                     </a>
@@ -36,6 +41,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('pedido_index') }}">
                         <i class="fas fa-inbox text-blue"></i> {{ __('Pedidos') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://inal.sifega.anmat.gov.ar/consultadeRegistro/" target="_blank">
+                        <i class="fas fa-search text-blue"></i> {{ __('Consulta RNE Nacional') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://inal.sifega.anmat.gov.ar/consultadealimentos/" target="_blank">
+                        <i class="fas fa-search text-blue"></i> {{ __('Consulta RNPA Nacional') }}
                     </a>
                 </li>
                 @if (Auth::user()->role_id == 1)

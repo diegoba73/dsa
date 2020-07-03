@@ -159,7 +159,7 @@
         position: absolute;
         
         width: 100%;
-        height: 40px;
+        height: 50px;
         border-top: 1px solid #e7e7e7;
         }
 
@@ -333,7 +333,7 @@
         position: absolute;
         
         width: 100%;
-        height: 40px;
+        height: 50px;
         border-top: 1px solid #e7e7e7;
         }
 
@@ -562,11 +562,7 @@
             <br>
             <div class="bottom-footer">
                 <p><b>Los resultados consignados se refieren exclusivamente a la muestra recibida y el Laboratorio declina toda responsabilidad por el uso indebido que se hiciere de éste informe. El presente certificado solo puede ser reproducido integramente y con autorización escrita del Laboratorio</b></p>
-            <ul class="footer-nav">
-                <li>
-                    Berwyn 226, Trelew - Chubut, Argentina - Telefono:(+54) 280 4427421/4421011 - Email:laboratoriodpsachubut@gmail.com
-                </li>
-            </ul>
+                <p>Berwyn 226, Trelew - Chubut, Argentina - Telefono:(+54) 280 4427421/4421011 - Email:laboratoriodpsachubut@gmail.com</p>
             </div>
         </footer>
     </body>

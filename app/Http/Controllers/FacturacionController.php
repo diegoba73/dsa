@@ -29,12 +29,14 @@ class FacturacionController extends Controller
         $fecha_e       = $request->get('fechae');
         $fecha_p       = $request->get('fechap');
         $detalle = $request->get('detalle');
+        $departamento = $request->get('departamento');
         $depositante = $request->get('depositante');
         $facturas = Facturacion::orderBy('facturacions.id', 'DESC')
                     ->depositante($depositante)
                     ->fechae($fecha_e)
                     ->fechap($fecha_p)
                     ->detalle($detalle)
+                    ->departamento($departamento)
                     ->paginate(20);
         $user = User::pluck('usuario');
         return view('dsa.facturas.index')->with(compact('facturas')); // listado facturas
@@ -118,16 +120,6 @@ class FacturacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $message = [
-            'detalle.unique' => 'María Ines NO DUPLIQUES LAS FACTURAS',
-        ];
-
-        $rules = [
-            'detalle' => 'unique:facturacions,detalle',
-        ];
-
-        $this->validate($request, $rules, $message);
-
         $factura = Facturacion::find($id);
         $factura->depositante = $request->input('depositante');
         $factura->fecha_emision = $request->input('fecha_emision');

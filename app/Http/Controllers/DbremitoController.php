@@ -159,4 +159,36 @@ class DbremitoController extends Controller
         $provincia = Provincia::all();
         return view('db.remitos.imprimir_remito')->with(compact('db_remito', 'remitente', 'localidad', 'provincia', 'muestras', 'fecha_hoy'));
     }
+
+    public function aceptar (Request $request, $id)
+    {
+        $db_remito = Dbremito::findOrFail($id);
+        $db_remito->chequeado = '1';
+        $db_remito->save();
+        $notification = 'El Remito fué ACEPTADO correctamente.';
+        return back()->with(compact('notification'));
+    }
+    public function rechazar (Request $request, $id)
+    {
+        $db_remito = Dbremito::findOrFail($id);
+        $db_remito->chequeado = '0';
+        $db_remito->save();
+        $notification = 'El Remito fué Rechazado correctamente.';
+        return back()->with(compact('notification'));
+    }
+
+    public function imprimir_remito_firma($id)
+    {
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $fecha = Carbon::now();
+        $mes = $meses[($fecha->format('n')) - 1];
+        $fecha_hoy = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+        $db_remito = Dbremito::find($id);
+        $db_remito_muestra = DB::table('dbremito_muestra')->where('dbremito_id', $id)->first();
+        $remitente = Remitente::all();
+        $muestras = Muestra::where('departamento_id', 4)->where('cargada', 1)->where('aceptada', 1)->where('remitir', 0 || null)->get();
+        $localidad = Localidad::all();
+        $provincia = Provincia::all();
+        return view('db.remitos.imprimir_remito_firma')->with(compact('db_remito', 'remitente', 'localidad', 'provincia', 'muestras', 'fecha_hoy'));
+    }
 }

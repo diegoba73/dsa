@@ -73,6 +73,20 @@
                                             <label class="bmd-label-floating">Descripción:</label>
                                             <input type="text" class="form-control" name="descripcion" value="{{ $insumo->descripcion }}">
                                         </div>
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Costo:</label>
+                                            <input type="text" class="form-control" name="costo" value="{{ $insumo->costo }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Proveedor que cotizó:</label>
+                                            <input type="text" class="form-control" name="proveedor_cotizo" value="{{ $insumo->proveedor_cotizo }}">
+                                        </div>
+                                        <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Fecha de cotización:</label>
+                                            <input type="date" class="form-control form-control-sm" name="fecha_cotizacion" value="{{ $insumo->fecha_cotizacion }}">
+                                        </div>
+                                        </div>
                                         <a class="btn btn-default btn-close" href="{{ route('lab_insumos_index') }}">Cancelar</a>
                                         <button type="submit" class="btn btn-primary pull-center button-prevent-multiple-submit">
                                                     <i class="spinner fa fa-spinner fa-spin" style="display:none;"></i>

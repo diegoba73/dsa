@@ -125,6 +125,9 @@ class ReactivoController extends Controller
         $reactivo->ensayo = $request->input('ensayo');
         $reactivo->area = $request->input('area');
         $reactivo->renpre = $request->input('renpre');
+        $reactivo->costo = $request->input('costo');
+        $reactivo->proveedor_cotizo = $request->input('proveedor_cotizo');
+        $reactivo->fecha_cotizacion = $request->input('fecha_cotizacion');
         $reactivo->save(); // Insert nota
         $notification = 'El reactivo fué INGRESADO correctamente.';
         return redirect('/lab/reactivos/index')->with(compact('notification'));
@@ -198,6 +201,9 @@ class ReactivoController extends Controller
         $reactivo->ensayo_biologico = $request->input('ensayo_biologico');
         $reactivo->microbiologia = $request->input('microbiologia');
         $reactivo->renpre = $request->input('renpre');
+        $reactivo->costo = $request->input('costo');
+        $reactivo->proveedor_cotizo = $request->input('proveedor_cotizo');
+        $reactivo->fecha_cotizacion = $request->input('fecha_cotizacion');
         $reactivo->save();
         $url = Input::get('url');
         $notification = 'El reactivo fué ACTUALIZADO correctamente.';

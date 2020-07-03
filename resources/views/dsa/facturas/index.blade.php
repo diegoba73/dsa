@@ -41,7 +41,15 @@
                             </div>
                             {{ Form::text('detalle', null, ['class' => 'form-control form-control-sm', 'placeholder' => 'Detalle']) }}
                         </div>
-                    </div>                  
+                    </div>  
+                    <div class="form-group mr-5">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="form-control form-control-sm"><i class="fas fa-search"></i></span>
+                            </div>
+                            {{ Form::text('departamento', null, ['class' => 'form-control form-control-sm', 'placeholder' => 'Departamento']) }}
+                        </div>
+                    </div>                 
                     <div class="form-group mr-1">
                         <button type="submit" class="btn btn-secondary btn-fab btn-fab-mini btn-round">
                         <i class="fas fa-search"></i>
@@ -89,6 +97,7 @@
                                 <th>Fecha Emisión</th>
                                 <th>Fecha Pago</th>
                                 <th>Detalle</th>
+                                <th>Departamento</th>
                                 <th>Importe</th>
                                 <th>Opciones</th>
                                 </tr>
@@ -105,6 +114,7 @@
                                     <td></td>
                                     @endif
                                     <td style="width:20px">{{ $factura->detalle}}</td>
+                                    <td style="width:20px">{{ $factura->departamento}}</td>
                                     <td style="width:20px">{{ $factura->importe}}</td>
                                     <td class="td-actions text-left">
                                         <a href="{{ url('/dsa/facturas/'.$factura->id.'/edit')}}" title="Editar" rel="tooltip" class="btn btn-primary btn-round">

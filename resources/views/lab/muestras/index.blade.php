@@ -260,7 +260,7 @@
                         </div>
                     </div>
                     <div class="row">
-                    @if (Auth::user()->departamento_id == 1)
+                    @if ((Auth::user()->departamento_id == 1) || (Auth::user()->departamento_id == 5))
                         <div class="col-sm-3">
                             <div class="input-group input-group-alternative">
                             <select class="chosen-select" name="departamento">
@@ -282,7 +282,7 @@
                         </div>
                     </div>
                     <div class="row">
-                    @if (Auth::user()->departamento_id == 1)
+                    @if ((Auth::user()->departamento_id == 1) || (Auth::user()->departamento_id == 5))
                         <div class="col-sm-4">
                              Cromatografía: {!! Form::checkbox('cromatografia', true, NULL, ['class' => 'checkbox']) !!}
                         </div>
@@ -338,9 +338,22 @@
                             <div class="col">
                                 <h3 class="mb-0" style="color:white">Muestras</h3>
                             </div>
+                            @if (Auth::user()->departamento_id == 5)
+                            <div></div>
+                            @else
                             <div class="col text-right">
+                            @if (Auth::user()->departamento_id == 1)
+                            <a href="{{ route('dl.excel') }}" class="btn btn-sm btn-secondary">Consultas Muestras en EXCEL</a>
+                            @elseif (Auth::user()->departamento_id == 2)
+                            <a href="{{ route('db.excel') }}" class="btn btn-sm btn-secondary">Consultas Muestras en EXCEL</a>
+                            @elseif (Auth::user()->departamento_id == 3)
+                            <a href="{{ route('dsb.excel') }}" class="btn btn-sm btn-secondary">Consultas Muestras en EXCEL</a>
+                            @elseif (Auth::user()->departamento_id == 4)
+                            <a href="{{ route('dso.excel') }}" class="btn btn-sm btn-secondary">Consultas Muestras en EXCEL</a>
+                            @endif
                                 <a href="{{ route('lab_muestras_create') }}" class="btn btn-sm btn-primary">Nueva Muestra</a>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -390,7 +403,7 @@
                                                         <span class="badge badge-pill badge-info">EB</span>
                                                         @endif
                                                     </td>
-                                                    @elseif (Auth::user()->departamento_id == 1)
+                                                    @elseif (Auth::user()->departamento_id == 1 || Auth::user()->departamento_id == 5)
                                                     <td style="width:20px" class="text-center">
                                                         @if ($muestra->departamento_id == 1)
                                                             @if (is_null($muestra->aceptada))
@@ -515,6 +528,15 @@
                                                                             <i class="fas fa-print text-blue" style="margin-left:1em"></i> {{ __('Imprimir Resultado') }}
                                                                         </a>
                                                                     </li>
+                                                                    @if ((Auth::user()->id == 2) || (Auth::user()->id == 3))
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" onclick="refresh()" target="_blank">
+                                                                            <i class="fas fa-file-signature" style="margin-left:1em"></i> {{ __('Imprimir Resultado Firmado') }}
+                                                                        </a>
+                                                                    </li>
+                                                                    @else
+                                                                    <li><a></a></li>
+                                                                    @endif
                                                                     @endif
                                                                 @else
                                                             </ul>

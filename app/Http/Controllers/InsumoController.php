@@ -131,6 +131,9 @@ class InsumoController extends Controller
         $insumo->microbiologia = $request->input('microbiologia');
         $insumo->quimica_al = $request->input('quimica_al');
         $insumo->quimica_ag = $request->input('quimica_ag');
+        $insumo->costo = $request->input('costo');
+        $insumo->proveedor_cotizo = $request->input('proveedor_cotizo');
+        $insumo->fecha_cotizacion = $request->input('fecha_cotizacion');
         $insumo->save(); // Insert nota
         $notification = 'El insumo fué INGRESADO correctamente.';
         return redirect('/lab/insumos/index')->with(compact('notification'));
@@ -188,6 +191,9 @@ class InsumoController extends Controller
         $insumo->microbiologia = $request->input('microbiologia');
         $insumo->quimica_al = $request->input('quimica_al');
         $insumo->quimica_ag = $request->input('quimica_ag');
+        $insumo->costo = $request->input('costo');
+        $insumo->proveedor_cotizo = $request->input('proveedor_cotizo');
+        $insumo->fecha_cotizacion = $request->input('fecha_cotizacion');
         $insumo->save();
         $url = Input::get('url');
         $notification = 'El insumo fué ACTUALIZADO correctamente.';

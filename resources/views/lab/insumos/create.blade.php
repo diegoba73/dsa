@@ -83,6 +83,21 @@
                                                 <label class="bmd-label-floating">Descripción:</label>
                                                 <input type="text" class="form-control" name="descripcion">
                                             </div>
+                                            <div class="form-group">
+                                            <label class="bmd-label-floating">Costo:</label>
+                                            <input type="text" class="form-control form-control-sm" name="costo">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Proveedor que cotizó:</label>
+                                            <input type="text" class="form-control form-control-sm" name="proveedor_cotizo">
+                                        </div>
+                                        <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="label-control">Fecha de Cotizacion:</label>
+                                                <input type="date" class="form-control form-control-sm" id="datepicker" name="fecha_cotizacion" value="<?php echo date('Y-m-d'); ?>">
+                                        </div>
+                                        </div>
+                                        <a class="btn btn-default btn-close" href="{{ route('lab_reactivos_index') }}">Cancelar</a>
                                         <button type="submit" class="btn btn-primary pull-center button-prevent-multiple-submit">
                                                     <i class="spinner fa fa-spinner fa-spin" style="display:none;"></i>
                                                     Ingresar

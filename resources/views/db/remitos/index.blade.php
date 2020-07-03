@@ -71,7 +71,7 @@
                                 <h3 class="mb-0" style="color:white">Remitos ingresados</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ route('db_remitos_create') }}" class="btn btn-sm btn-primary">Nueva Muestra</a>
+                                <a href="{{ route('db_remitos_create') }}" class="btn btn-sm btn-primary">Nueva Remito</a>
                             </div>
                         </div>
                     </div>
@@ -84,6 +84,7 @@
                                 <th>Fecha</th>
                                 <th>Remitente</th>
                                 <th>Conclusión</th>
+                                <th>Firmado</th>
                                 <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -93,14 +94,42 @@
                                     <td class="text-center">{{ $db_remito->nro_nota}}</td>
                                                     <td>{{ date('d-m-Y', strtotime($db_remito->fecha)) }}</td>
                                                     <td>{{ $db_remito->remitente->nombre}}</td>
-                                                    <td>{{ $db_remito->conclusion}}</td>
+                                                    <td>{{ str_limit($db_remito->conclusion, 30)}}</td>
+                                                    <td>
+                                                    @if ($db_remito->chequeado == 1)
+                                                        <a class="fas fa-check-circle fa-2x text-green"></a>
+                                                        @else
+                                                        <a class="fas fa-times-circle fa-2x text-red"></a>
+                                                    @endif
+                                                    </td>
                                                     <td class="td-actions text-left">
                                                         <a href="{{ url('/db/remitos/'.$db_remito->id.'/edit')}}" title="Editar" rel="tooltip" class="btn btn-primary btn-round">
                                                         <i class="fas fa-edit"></i>
                                                         </a>  
                                                         <a href="{{ url('/db/remitos/'.$db_remito->id.'/imprimir_remito')}}" target="_blank" title="Imprimir Remito" rel="tooltip" class="btn btn-primary btn-round">
                                                         <i class="fas fa-print"></i>
-                                                            </a>                               
+                                                            </a>
+                                                        @if ($db_remito->chequeado === 1)
+                                                        <a href="{{ url('/db/remitos/'.$db_remito->id.'/imprimir_remito_firma')}}" target="_blank" title="Imprimir Remito con firma" rel="tooltip" class="btn btn-primary btn-round">
+                                                            <i class="fas fa-file-signature"></i>
+                                                        </a>       
+                                                        @else
+                                                        <a></a>                        
+                                                        @endif
+                                                            @if (Auth::user()->id == 4)
+                                                            @if (($db_remito->chequeado === null) || ($db_remito->chequeado === 0))
+                                                                <a class="btn btn-primary btn-round" href="{{ route('aceptar_remito', $db_remito->id) }}">
+                                                                    <i class="fas fa-check"></i>
+                                                                </a>
+                                                                <a class="btn btn-primary btn-round" href="{{ route('rechazar_remito', $db_remito->id) }}">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                            @elseif ($db_remito->chequeado === 1)
+                                                                <a class="btn btn-primary btn-round" href="{{ route('rechazar_remito', $db_remito->id) }}">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                            @endif
+                                                            @endif                     
                                                     </td>
                                 </tr>
                             @endforeach

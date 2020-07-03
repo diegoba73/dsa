@@ -271,7 +271,11 @@
             padding-bottom: 7px;
             color: #000000;
         }
- 
+        #firma{
+        float: center;
+        width:300px;
+        height:100px;
+        }
         .pie{
         text-align: center;
         font-size: 8px; 
@@ -369,7 +373,8 @@
                 <td> </td>
                 </tr>
                 <tr>
-                <td> </td>
+                <td>                 
+                </td>
                 </tr>
                 </table>
             </div>
@@ -377,12 +382,6 @@
                 <table id="tabla">
                 <tr>
                 <td style="width:150px"> </td><td><strong>Conclusión: </strong>{{$dso_remito->conclusion}}</td>
-                </tr>
-                <tr>
-                <td style="width:150px"></td><td style="width:600px">Adjunto boleta de arancelamiento. La misma tiene fecha de vencimiento.</td>
-                </tr>
-                <tr>
-                <td style="width:150px"></td><td style="width:600px">Se deberá abonar UNICAMENTE en ventanilla del Banco del Chubut. Una vez abonada, acercar personalmente o remitir a este Departamento vía correo postal a R. Berwyn 226 (9100) Trelew, o vía correo electrónico a dsa.deptosaludocupacional@gmail.com, la Boleta Nº 2 y copia del comprobante del Banco (ticket).</td>
                 </tr>
                 <tr>
                 <td style="width:150px"></td><td style="width:600px"><strong>Nota:</strong></td>

@@ -49,6 +49,11 @@
                 @endif
                 @if (Auth::user()->role_id == 1)
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dsb_remitos_index') }}">
+                        <i class="fas fa-file-invoice text-blue"></i> {{ __('Remitos DSB') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('user.index') }}">
                         <i class="ni ni-circle-08 text-primary"></i> {{ __('Usuarios') }}
                     </a>
@@ -95,7 +100,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ url('/charts/appointments/line')}}">
                         <i class="fas fa-list-alt"></i> {{ __('Reportes') }}
                     </a>
                 </li>

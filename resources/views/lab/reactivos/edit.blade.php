@@ -78,6 +78,20 @@
                                             <label class="bmd-label-floating">RENPRE:</label>
                                             {!! Form::checkbox('renpre', true, $reactivo->renpre) !!}
                                         </div>
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Costo:</label>
+                                            <input type="text" class="form-control" name="costo" value="{{ $reactivo->costo }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Proveedor que cotizó:</label>
+                                            <input type="text" class="form-control" name="proveedor_cotizo" value="{{ $reactivo->proveedor_cotizo }}">
+                                        </div>
+                                        <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Fecha de Cotización:</label>
+                                            <input type="date" class="form-control form-control-sm" name="fecha_cotizacion" value="{{ $reactivo->fecha_cotizacion }}">
+                                        </div>
+                                        </div>
                                         <a class="btn btn-default btn-close" href="{{ route('lab_reactivos_index') }}">Cancelar</a>
                                         <button type="submit" class="btn btn-primary pull-center button-prevent-multiple-submit">
                                                     <i class="spinner fa fa-spinner fa-spin" style="display:none;"></i>

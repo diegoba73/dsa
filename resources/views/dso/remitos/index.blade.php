@@ -105,8 +105,15 @@
                                                         <i class="fas fa-edit"></i>
                                                         </a>  
                                                         <a href="{{ url('/dso/remitos/'.$dso_remito->id.'/imprimir_remito')}}" target="_blank" title="Imprimir Remito" rel="tooltip" class="btn btn-primary btn-round">
-                                                        <i class="fas fa-print"></i>
-                                                            </a>                               
+                                                            <i class="fas fa-print"></i>
+                                                        </a>  
+                                                        @if (Auth::user()->id == 6)
+                                                        <a href="{{ url('/dso/remitos/'.$dso_remito->id.'/imprimir_remito_firma')}}" target="_blank" title="Imprimir Remito con firma" rel="tooltip" class="btn btn-primary btn-round">
+                                                            <i class="fas fa-file-signature"></i>
+                                                        </a>       
+                                                        @else
+                                                        <a></a>                        
+                                                        @endif
                                                     </td>
                                 </tr>
                             @endforeach

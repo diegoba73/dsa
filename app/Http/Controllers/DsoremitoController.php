@@ -158,4 +158,19 @@ class DsoremitoController extends Controller
         $provincia = Provincia::all();
         return view('dso.remitos.imprimir_remito')->with(compact('dso_remito', 'remitente', 'localidad', 'provincia', 'muestras', 'fecha_hoy'));
     }
+    
+    public function imprimir_remito_firma($id)
+    {
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $fecha = Carbon::now();
+        $mes = $meses[($fecha->format('n')) - 1];
+        $fecha_hoy = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+        $dso_remito = Dsoremito::find($id);
+        $dso_remito_muestra = DB::table('dsoremito_muestra')->where('dsoremito_id', $id)->first();
+        $remitente = Remitente::all();
+        $muestras = Muestra::where('departamento_id', 4)->where('cargada', 1)->where('aceptada', 1)->where('remitir', 0 || null)->get();
+        $localidad = Localidad::all();
+        $provincia = Provincia::all();
+        return view('dso.remitos.imprimir_remito_firma')->with(compact('dso_remito', 'remitente', 'localidad', 'provincia', 'muestras', 'fecha_hoy'));
+    }
 }

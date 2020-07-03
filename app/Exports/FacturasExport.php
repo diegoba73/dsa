@@ -13,7 +13,7 @@ class FacturasExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return Facturacion::select("id", "depositante", "fecha_emision", "fecha_pago", "detalle", "codigo_pago", "importe")->get();
+        return Facturacion::select("id", "depositante", "fecha_emision", "fecha_pago", "detalle", "importe")->get();
     }
 
     public function headings(): array
@@ -24,7 +24,6 @@ class FacturasExport implements FromCollection, WithHeadings
             'Fecha Emisión',
             'Fecha de Pago',
             'Detalle',
-            'Código de Pago',
             'Importe',
         ];
     }
