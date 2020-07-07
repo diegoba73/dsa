@@ -108,6 +108,8 @@ Route::get('/lab/muestras/{id}/ht', 'MuestraController@ht')->name('lab_muestras_
 Route::post('/lab/muestras/index', 'MuestraController@enviar_mail')->name('enviar_mail');
 Route::get('/lab/muestras/aceptar/{id}', 'MuestraController@aceptar')->name('aceptar_muestra'); // aceptar muestra
 Route::get('/lab/muestras/devolver/{id}', 'MuestraController@devolver')->name('devolver_muestra'); // aceptar muestra
+Route::get('/lab/muestras/revisada/{id}', 'MuestraController@revisada')->name('muestra_revisada'); // muestra revisada
+Route::get('/lab/muestras/vrevisar/{id}', 'MuestraController@vrevisar')->name('muestra_vrevisar'); // muestra volver revisar
 Route::get('/lab/notas/index', 'DlnotaController@index')->name('lab_notas_index'); // listado notas
 Route::get('/lab/notas/create', 'DlnotaController@create')->name('lab_notas_create'); // Nueva nota
 Route::post('/lab/notas', 'DlnotaController@store'); // guardar nota
@@ -158,6 +160,7 @@ Route::post('/remitos/{id}/edit', 'DsoremitoController@update'); // actualizar r
 Route::get('/remitos/{id}/imprimir_remito', 'DsoremitoController@imprimir_remito')->name('imprimir_remito'); // imprimir remito
 Route::get('/remitos/{id}/imprimir_remito_firma', 'DsoremitoController@imprimir_remito_firma')->name('imprimir_remito_firma'); // imprimir remito con firma
 Route::get('dso-list-excel', 'MuestraController@exportDsoExcel')->name('dso.excel');
+Route::get('/lab/muestras/{id}/imprimir_resultado_firma', 'MuestraController@imprimir_resultado_firma')->name('imprimir_resultado_firma'); // imprimir resultado con firma
 });
 
 Route::middleware(['dsb'])->prefix('dsb')->group(function () {
@@ -178,6 +181,7 @@ Route::get('/remitos/{id}/imprimir_remito_firma', 'DsbremitoController@imprimir_
 Route::get('/remitos/aceptar/{id}', 'DsbremitoController@aceptar')->name('aceptar_remito_dsb'); // aceptar remito
 Route::get('/remitos/rechazar/{id}', 'DsbremitoController@rechazar')->name('rechazar_remito_dsb'); // aceptar remito
 Route::get('dsb-list-excel', 'MuestraController@exportDsbExcel')->name('dsb.excel');
+Route::get('/lab/muestras/{id}/imprimir_resultado_firma', 'MuestraController@imprimir_resultado_firma')->name('imprimir_resultado_firma'); // imprimir resultado con firma
 });
 
 Route::middleware(['dsa'])->prefix('dsa')->group(function () {
@@ -210,33 +214,34 @@ Route::get('/dsa/pedidos/{id}/imprimir', 'PedidoController@imprimir')->name('imp
 Route::resource('articulo','ArticuloController'); // agregar artículo
 
 
-Route::middleware(['db'])->prefix('db')->group(function () {
+Route::middleware(['db'])->group(function () {
 //DB
 
-Route::get('/notas/index', 'DbnotaController@index')->name('db_notas_index'); // listado notas
-Route::get('/notas/create', 'DbnotaController@create')->name('db_notas_create'); // Nueva nota
-Route::post('/notas', 'DbnotaController@store'); // guardar nota
-Route::get('/notas/{id}/edit', 'DbnotaController@edit')->name('db_notas_edit'); // editar nota
-Route::post('/notas/{id}/edit', 'DbnotaController@update'); // actualizar notas
-Route::get('/exp/index', 'DbexpController@index')->name('db_exp_index'); // listado expedientes
-Route::get('/exp/create', 'DbexpController@create')->name('db_exp_create'); // Nuevo expediente
-Route::post('/exp', 'DbexpController@store'); // guardar expediente
-Route::get('/exp/{id}/edit', 'DbexpController@edit')->name('db_exp_edit'); // editar expediente
-Route::post('/exp/{id}/edit', 'DbexpController@update'); // actualizar expediente
-Route::get('/remitos/index', 'DbremitoController@index')->name('db_remitos_index'); // listado remitos
-Route::get('/remitos/create', 'DbremitoController@create')->name('db_remitos_create'); // Nuevo remito
-Route::post('/remitos', 'DbremitoController@store'); // guardar remito
-Route::get('/remitos/{id}/edit', 'DbremitoController@edit')->name('db_remitos_edit'); // editar remito
-Route::post('/remitos/{id}/edit', 'DbremitoController@update'); // actualizar remitos
-Route::get('/remitos/{id}/imprimir_remito', 'DbremitoController@imprimir_remito')->name('imprimir_remito'); // imprimir remito
-Route::get('/remitos/{id}/imprimir_remito_firma', 'DbremitoController@imprimir_remito_firma')->name('imprimir_remito_firma'); // imprimir remito con firma
-Route::get('/mesaentrada/index', 'MesaentradaController@index')->name('db_me_index'); // listado Mesa entrada
-Route::get('/mesaentrada/create', 'MesaentradaController@create')->name('db_me_create'); // Nuevo ingreso
-Route::post('/mesaentrada', 'MesaentradaController@store'); // guardar ingreso
-Route::get('/mesaentrada/{id}/edit', 'MesaentradaController@edit')->name('db_me_edit'); // editar ingreso
-Route::post('/mesaentrada/{id}/edit', 'MesaentradaController@update'); // actualizar ingreso
+Route::get('/db/notas/index', 'DbnotaController@index')->name('db_notas_index'); // listado notas
+Route::get('/db/notas/create', 'DbnotaController@create')->name('db_notas_create'); // Nueva nota
+Route::post('/db/notas', 'DbnotaController@store'); // guardar nota
+Route::get('/db/notas/{id}/edit', 'DbnotaController@edit')->name('db_notas_edit'); // editar nota
+Route::post('/db/notas/{id}/edit', 'DbnotaController@update'); // actualizar notas
+Route::get('/db/exp/index', 'DbexpController@index')->name('db_exp_index'); // listado expedientes
+Route::get('/db/exp/create', 'DbexpController@create')->name('db_exp_create'); // Nuevo expediente
+Route::post('/db/exp', 'DbexpController@store'); // guardar expediente
+Route::get('/db/exp/{id}/edit', 'DbexpController@edit')->name('db_exp_edit'); // editar expediente
+Route::post('/db/exp/{id}/edit', 'DbexpController@update'); // actualizar expediente
+Route::get('/db/remitos/index', 'DbremitoController@index')->name('db_remitos_index'); // listado remitos
+Route::get('/db/remitos/create', 'DbremitoController@create')->name('db_remitos_create'); // Nuevo remito
+Route::post('/db/remitos', 'DbremitoController@store'); // guardar remito
+Route::get('/db/remitos/{id}/edit', 'DbremitoController@edit')->name('db_remitos_edit'); // editar remito
+Route::post('/db/remitos/{id}/edit', 'DbremitoController@update'); // actualizar remitos
+Route::get('/db/remitos/{id}/imprimir_remito', 'DbremitoController@imprimir_remito')->name('imprimir_remito'); // imprimir remito
+Route::get('/db/remitos/{id}/imprimir_remito_firma', 'DbremitoController@imprimir_remito_firma')->name('imprimir_remito_firma'); // imprimir remito con firma
+Route::get('/db/mesaentrada/index', 'MesaentradaController@index')->name('db_me_index'); // listado Mesa entrada
+Route::get('/db/mesaentrada/create', 'MesaentradaController@create')->name('db_me_create'); // Nuevo ingreso
+Route::post('/db/mesaentrada', 'MesaentradaController@store'); // guardar ingreso
+Route::get('/db/mesaentrada/{id}/edit', 'MesaentradaController@edit')->name('db_me_edit'); // editar ingreso
+Route::post('/db/mesaentrada/{id}/edit', 'MesaentradaController@update'); // actualizar ingreso
 Route::get('/db/mesaentrada/finalizar/{id}', 'MesaentradaController@finalizar')->name('finalizar'); // finalizar
 Route::get('/db/remitos/aceptar/{id}', 'DbremitoController@aceptar')->name('aceptar_remito'); // aceptar remito
 Route::get('/db/remitos/rechazar/{id}', 'DbremitoController@rechazar')->name('rechazar_remito'); // aceptar remito
 Route::get('db-list-excel', 'MuestraController@exportDbExcel')->name('db.excel');
+Route::get('/lab/muestras/{id}/imprimir_resultado_firma', 'MuestraController@imprimir_resultado_firma')->name('imprimir_resultado_firma'); // imprimir resultado con firma
 });

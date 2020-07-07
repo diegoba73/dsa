@@ -232,10 +232,29 @@ class MuestraController extends Controller
         $muestra = Muestra::findOrFail($id);
         $muestra->aceptada = null;
         $muestra->cargada = "0";
+        $muestra->revisada = null;
         $muestra->remitir = null;
         $muestra->fecha_salida = null;
         $muestra->save();
         $notification = 'La muestra fué DEVUELTA correctamente.';
+        return back()->with(compact('notification'));
+    }
+
+    public function revisada (Request $request, $id)
+    {
+        $muestra = Muestra::findOrFail($id);
+        $muestra->revisada = '1';
+        $muestra->save();
+        $notification = 'La muestra fué REVISADA correctamente.';
+        return back()->with(compact('notification'));
+    }
+
+    public function vrevisar (Request $request, $id)
+    {
+        $muestra = Muestra::findOrFail($id);
+        $muestra->revisada = '0';
+        $muestra->save();
+        $notification = 'La muestra fué colocada para su revisación nuevamente.';
         return back()->with(compact('notification'));
     }
 

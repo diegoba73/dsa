@@ -373,9 +373,8 @@
                                     <th scope="col" class="text-center">Área</th>
                                     @endif
                                     <th scope="col">Fecha de Salida</th>
-                                    @if (Auth::user()->departamento_id == 1)
+                                    <th scope="col">Firma Digital</th>
                                     <th scope="col" class="text-right">Opciones</th>
-                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -465,85 +464,117 @@
                                                         <td style="width:20%"><span class="badge badge-pill badge-success">SIN SALIDA</span></td>
                                                     @endif
                                                     @endif
-                                                    @if (Auth::user()->departamento_id == 1)
+                                                    @if ($muestra->revisada === 1)
+                                                        <td style="width:10%" align="center"><span class="fas fa-check fa-2x text-green"></span></td>
+                                                        @else
+                                                        <td></td>
+                                                    @endif
                                                     <td class="text-right">
+                                                        @if (Auth::user()->departamento_id == 1)
                                                         <div class="dropdown">
                                                             <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fas fa-ellipsis-v"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-center dropdown-menu-arrow">
-                                                            <ul class="navbar-nav" align="left">                                                            
+                                                            <ul class="navbar-nav" align="left">
+                                                                    @if (($muestra->revisada === null) || ($muestra->revisada === 0))                                               
                                                                     <li class="nav-item">
                                                                         <a class="nav-link" href="{{ route('devolver_muestra', $muestra->id) }}">
                                                                             <i class="far fa-arrow-alt-circle-left text-primary" style="margin-left:1em"></i> {{ __('Devolver') }}
                                                                         </a>
                                                                     </li>
-                                                                    @if ($muestra->aceptada === null)
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ route('aceptar_muestra', $muestra->id) }}">
-                                                                            <i class="fas fa-check-circle text-primary" style="margin-left:1em"></i> {{ __('Aceptar') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">
-                                                                            <i class="fas fa-times-circle text-blue" style="margin-left:1em"></i> {{ __('Rechazar') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    @elseif ($muestra->aceptada === 0)
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ route('aceptar_muestra', $muestra->id) }}">
-                                                                            <i class="fas fa-check-circle text-primary" style="margin-left:1em"></i> {{ __('Aceptar') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">
-                                                                            <i class="fas fa-times-circle text-blue" style="margin-left:1em"></i> {{ __('Formulario Rechazo') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_rechazo')}}" onclick="refresh()" target="_blank">
-                                                                            <i class="fas fa-print text-blue" style="margin-left:1em"></i> {{ __('Imprimir Rechazo') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    @elseif ($muestra->aceptada === 1)
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">
-                                                                            <i class="fas fa-times-circle text-blue" style="margin-left:1em"></i> {{ __('Rechazar') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/ht')}}" target="_blank">
-                                                                            <i class="fas fa-file-alt text-blue" style="margin-left:1em"></i> {{ __('Hoja de Trabajo') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ route('lab_muestras_resultado', $muestra->id) }}">
-                                                                            <i class="fas fa-file-contract text-blue" style="margin-left:1em"></i> {{ __('Resultado') }}
-                                                                        </a>
-                                                                    </li>
+                                                                        @if ($muestra->aceptada === null)
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ route('aceptar_muestra', $muestra->id) }}">
+                                                                                <i class="fas fa-check-circle text-primary" style="margin-left:1em"></i> {{ __('Aceptar') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">
+                                                                                <i class="fas fa-times-circle text-blue" style="margin-left:1em"></i> {{ __('Rechazar') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        @elseif ($muestra->aceptada === 0)
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ route('aceptar_muestra', $muestra->id) }}">
+                                                                                <i class="fas fa-check-circle text-primary" style="margin-left:1em"></i> {{ __('Aceptar') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">
+                                                                                <i class="fas fa-times-circle text-blue" style="margin-left:1em"></i> {{ __('Formulario Rechazo') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_rechazo')}}" onclick="refresh()" target="_blank">
+                                                                                <i class="fas fa-print text-blue" style="margin-left:1em"></i> {{ __('Imprimir Rechazo') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        @elseif ($muestra->aceptada === 1)
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">
+                                                                                <i class="fas fa-times-circle text-blue" style="margin-left:1em"></i> {{ __('Rechazar') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/ht')}}" target="_blank">
+                                                                                <i class="fas fa-file-alt text-blue" style="margin-left:1em"></i> {{ __('Hoja de Trabajo') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ route('lab_muestras_resultado', $muestra->id) }}">
+                                                                                <i class="fas fa-file-contract text-blue" style="margin-left:1em"></i> {{ __('Resultado') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        @endif
+                                                                        @if ($muestra->cargada === 1)
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado')}}" onclick="refresh()" target="_blank">
+                                                                                <i class="fas fa-print text-blue" style="margin-left:1em"></i> {{ __('Imprimir Resultado') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        @endif
                                                                     @endif
-                                                                    @if ($muestra->cargada === 1)
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado')}}" onclick="refresh()" target="_blank">
-                                                                            <i class="fas fa-print text-blue" style="margin-left:1em"></i> {{ __('Imprimir Resultado') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    @if ((Auth::user()->id == 2) || (Auth::user()->id == 3))
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" onclick="refresh()" target="_blank">
-                                                                            <i class="fas fa-file-signature" style="margin-left:1em"></i> {{ __('Imprimir Resultado Firmado') }}
-                                                                        </a>
-                                                                    </li>
-                                                                    @else
-                                                                    <li><a></a></li>
+                                                                    @if ($muestra->revisada === 1)                                             
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado')}}" onclick="refresh()" target="_blank">
+                                                                                <i class="fas fa-print text-blue" style="margin-left:1em"></i> {{ __('Imprimir Resultado') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" onclick="refresh()" target="_blank">
+                                                                                <i class="fas fa-file-signature" style="margin-left:1em"></i> {{ __('Imprimir Resultado Firmado') }}
+                                                                            </a>
+                                                                        </li>
                                                                     @endif
-                                                                    @endif
-                                                                @else
                                                             </ul>
                                                             </div>
-                                                        </div>
+                                                            </div>
+                                                            @else
+                                                            <div></div>
+                                                            @endif
+                                                            @if ((Auth::user()->departamento_id == 2) || (Auth::user()->departamento_id == 3) || (Auth::user()->departamento_id == 4))
+                                                            @if (($muestra->revisada === 1) && (Auth::user()->role_id === 1))
+                                                            <div class="dropdown">
+                                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-center dropdown-menu-arrow">
+                                                            <ul class="navbar-nav" align="left">
+                                                                    
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" onclick="refresh()" target="_blank">
+                                                                                <i class="fas fa-file-signature" style="margin-left:1em"></i> {{ __('Imprimir Resultado Firmado') }}
+                                                                            </a>
+                                                                        </li>
+                                                                    
+                                                            </ul>
+                                                            </div>
+                                                            </div>
+                                                            @endif
+                                                            @endif
                                                     </td>
-                                                    @endif
+                                                   
                                                 </tr>
                             @endforeach
                             </tbody>

@@ -14,6 +14,14 @@
                             <div class="card">
                                 <div class="alert alert-default">
                                     <strong class="card-title">Muestra Nº {{$muestra->numero}}</strong>
+                                    <div style="float:right;">
+                                    @if ($muestra->revisada === 1)
+                                    <strong class="card-title">Revisada</strong>
+                                    <i class="fas fa-check fa-2x text-green"></i>
+                                    @else
+                                    
+                                    @endif
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <form class="form-prevent-multiple-submit" method="post" action="{{ url('/lab/muestras/'.$muestra->id.'/edit') }}">
@@ -287,19 +295,36 @@
                                         <div class="row">
                                             <div class="col-md-12 text-center">
                                                 <a class="btn btn-default btn-close" href="{{ route('lab_muestras_index') }}">Cancelar</a>
-                                            @if (Auth::user()->departamento_id == 1)
-                                                <a class="btn btn-warning btn-close" href="{{ route('devolver_muestra', $muestra->id) }}">Devolver</a>
-                                                <a class="btn btn-danger btn-close" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">Rechazar</a>
-                                                @if (($muestra->aceptada == 0) || ($muestra->aceptada === null))
-                                                <a class="btn btn-success btn-close" href="{{ route('aceptar_muestra', $muestra->id) }}">Aceptar</a> 
+                                            @if (($muestra->revisada === null) || ($muestra->revisada === 0))
+                                                @if ((Auth::user()->departamento_id == 1) && ($muestra->aceptada === 1))
+                                                    <a class="btn btn-info btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/ht')}}" target="_blank">Hoja de Trabajo</a>
                                                 @endif
-                                            @endif
-                                            @if ((Auth::user()->departamento_id == 1) || ($muestra->aceptada === null) || ($muestra->aceptada === 0))
-                                                <a class="btn btn-primary btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/edit')}}">Editar</a>
-                                            @endif
-                                            @if ((Auth::user()->departamento_id == 1) && ($muestra->aceptada === 1))
-                                                <a class="btn btn-info btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/ht')}}" target="_blank">Hoja de Trabajo</a>
+                                                @if (Auth::user()->departamento_id == 1)
+                                                    <a class="btn btn-warning btn-close" href="{{ route('devolver_muestra', $muestra->id) }}">Devolver</a>
+                                                    <a class="btn btn-danger btn-close" href="{{ route('lab_muestras_rechazo', $muestra->id) }}">Rechazar</a>
+                                                    @if (($muestra->aceptada == 0) || ($muestra->aceptada === null))
+                                                    <a class="btn btn-success btn-close" href="{{ route('aceptar_muestra', $muestra->id) }}">Aceptar</a> 
+                                                    @endif
                                                 @endif
+                                                @if ((Auth::user()->departamento_id == 1) || ($muestra->aceptada === null) || ($muestra->aceptada === 0))
+                                                    <a class="btn btn-primary btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/edit')}}">Editar</a>
+                                                @endif
+                                                @if ((Auth::user()->departamento_id == 1) && ($muestra->cargada == 1))
+                                                    <a class="btn btn-success btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado')}}" target="_blank">Imprimir Resultado</a> 
+                                                @endif
+                                                @if (($muestra->cargada == 1) && ((Auth::user()->id == 2) || (Auth::user()->id == 3)))
+                                                    <a class="btn btn-outline-success" href="{{ route('muestra_revisada', $muestra->id) }}">Revisada</a>
+                                                @endif
+                                            @elseif (($muestra->revisada === 1) && ((Auth::user()->id == 2) || (Auth::user()->id == 3)))
+                                                <a class="btn btn-danger btn-close" href="{{ route('muestra_vrevisar', $muestra->id) }}">Volver a Revisar</a>
+                                                <a class="btn btn-success btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado')}}" target="_blank">Imprimir Resultado</a> 
+                                                <a class="btn btn-primary btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" target="_blank">Imprimir Resultado Firmado</a>
+                                            @elseif (($muestra->revisada === 1) && (Auth::user()->departamento_id == 1))
+                                                <a class="btn btn-success btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado')}}" target="_blank">Imprimir Resultado</a>                                         
+                                                <a class="btn btn-primary btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" target="_blank">Imprimir Resultado Firmado</a>
+                                            @elseif (($muestra->revisada === 1) && (Auth::user()->role_id == 1))
+                                                <a class="btn btn-primary btn-close" href="{{ url('/lab/muestras/'.$muestra->id.'/imprimir_resultado_firma')}}" target="_blank">Imprimir Resultado Firmado</a>
+                                            @endif
                                             </div>
                                         </div>
                                     </form>
